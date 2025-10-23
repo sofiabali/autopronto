@@ -12,6 +12,8 @@ def conectar_bd():
 def criar_tabelas():
     conn = conectar_bd()
     cursor = conn.cursor()
+
+    # tabela de veículos
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS veiculos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -21,8 +23,25 @@ def criar_tabelas():
             valor_diaria REAL
         )
     ''')
+
+    # tabela de clientes
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS clientes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE,
+            telefone TEXT,
+            cpf TEXT UNIQUE,
+            senha TEXT NOT NULL
+        )
+    ''')
+
     conn.commit()
     conn.close()
+
+# cria as tabelas ao iniciar o servidor
+criar_tabelas()
+
 
 
 @app.route('/')
@@ -36,30 +55,43 @@ def carros():
     conn.close()
     return render_template('carros.html', carros=carros)
 
-@app.route('/cadastrar', methods=['GET', 'POST'])
-def cadastrar():
+
+@app.route('/cadastro_cliente', methods=['GET', 'POST'])
+def cadastro_cliente():
     if request.method == 'POST':
-        modelo = request.form['modelo']
-        marca = request.form['marca']
-        ano = request.form['ano']
-        valor_diaria = request.form['valor_diaria']
+        nome = request.form['nome']
+        email = request.form['email']
+        telefone = request.form['telefone']
+        cpf = request.form['cpf']
+        senha = request.form['senha']
 
         conn = conectar_bd()
-        conn.execute('INSERT INTO veiculos (modelo, marca, ano, valor_diaria) VALUES (?, ?, ?, ?)',
-                     (modelo, marca, ano, valor_diaria))
+        cursor = conn.cursor()
+        cursor.execute('''
+            INSERT INTO clientes (nome, email, telefone, cpf, senha)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (nome, email, telefone, cpf, senha))
         conn.commit()
         conn.close()
-        return redirect(url_for('carros'))
-    return render_template('cadastro.html')
 
-# ---- API para JS (exemplo AJAX) ----
-@app.route('/api/carros')
-def api_carros():
+        return redirect(url_for('index'))
+
+    return render_template('cadastro_cliente.html')
+
+
+@app.route('/adicionar_carro', methods=['POST'])
+def adicionar_carro():
+    data = request.get_json()
     conn = conectar_bd()
-    carros = conn.execute('SELECT * FROM veiculos').fetchall()
+    cursor = conn.cursor()
+    cursor.execute('''
+        INSERT INTO veiculos (modelo, marca, ano, valor_diaria)
+        VALUES (?, ?, ?, ?)
+    ''', (data['modelo'], data['marca'], data['ano'], data['valor_diaria']))
+    conn.commit()
     conn.close()
-    return jsonify([dict(c) for c in carros])
+    return jsonify({'mensagem': 'Carro adicionado com sucesso!'})
 
 if __name__ == '__main__':
-    criar_tabelas()
     app.run(debug=True)
+
