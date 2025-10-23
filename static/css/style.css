@@ -135,7 +135,7 @@ nav a:hover::after {
     animation: float 3s ease-in-out infinite;
 }
 
-/* ======= CARDS DE DESTAQUE ======= */
+
 .features {
     display: flex;
     justify-content: center;

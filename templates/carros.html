@@ -1,10 +1,22 @@
 {% extends "base.html" %}
-{% block title %}Carros Disponíveis{% endblock %}
+{% block title %}Carros Disponíveis - AutoPronto{% endblock %}
+
 {% block content %}
-<h2>Carros disponíveis</h2>
-<ul>
-    {% for carro in carros %}
-        <li>{{ carro.marca }} {{ carro.modelo }} - {{ carro.ano }} (R${{ carro.valor_diaria }}/dia)</li>
-    {% endfor %}
-</ul>
+<section class="lista-carros">
+    <h2>🚙 Carros Disponíveis</h2>
+    <p>Escolha o veículo ideal para sua viagem!</p>
+
+    <div class="carros-grid">
+        {% for carro in carros %}
+        <div class="car-card">
+            <img src="{{ url_for('static', filename='img/carro-hero.png') }}" alt="Imagem do carro">
+            <h3>{{ carro.marca }} {{ carro.modelo }}</h3>
+            <p><strong>Ano:</strong> {{ carro.ano }}</p>
+            <p><strong>Diária:</strong> R$ {{ carro.valor_diaria }}</p>
+            <button class="btn">Reservar</button>
+        </div>
+        {% endfor %}
+    </div>
+</section>
 {% endblock %}
+

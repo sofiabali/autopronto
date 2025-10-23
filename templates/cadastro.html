@@ -1,12 +1,36 @@
 {% extends "base.html" %}
-{% block title %}Cadastrar Veículo{% endblock %}
+{% block title %}Cadastro de Veículo - AutoPronto{% endblock %}
+
 {% block content %}
-<h2>Cadastro de Veículo</h2>
-<form method="post">
-    <input type="text" name="marca" placeholder="Marca" required><br>
-    <input type="text" name="modelo" placeholder="Modelo" required><br>
-    <input type="number" name="ano" placeholder="Ano" required><br>
-    <input type="number" name="valor_diaria" placeholder="Valor da diária" step="0.01" required><br>
-    <button type="submit">Salvar</button>
-</form>
+<section class="cadastro-container">
+    <div class="form-card">
+        <h2>🚗 Cadastro de Veículo</h2>
+        <p>Adicione novos carros à frota da AutoPronto</p>
+
+        <form method="post">
+            <div class="input-group">
+                <label for="marca">Marca</label>
+                <input type="text" id="marca" name="marca" placeholder="Ex: Toyota" required>
+            </div>
+
+            <div class="input-group">
+                <label for="modelo">Modelo</label>
+                <input type="text" id="modelo" name="modelo" placeholder="Ex: Corolla" required>
+            </div>
+
+            <div class="input-group">
+                <label for="ano">Ano</label>
+                <input type="number" id="ano" name="ano" placeholder="Ex: 2023" required>
+            </div>
+
+            <div class="input-group">
+                <label for="valor_diaria">Valor da diária</label>
+                <input type="number" step="0.01" id="valor_diaria" name="valor_diaria" placeholder="Ex: 250.00" required>
+            </div>
+
+            <button type="submit" class="btn">Salvar Veículo</button>
+        </form>
+    </div>
+</section>
 {% endblock %}
+
