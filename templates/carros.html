@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Carros Disponíveis{% endblock %}
+{% block content %}
+<h2>Carros disponíveis</h2>
+<ul>
+    {% for carro in carros %}
+        <li>{{ carro.marca }} {{ carro.modelo }} - {{ carro.ano }} (R${{ carro.valor_diaria }}/dia)</li>
+    {% endfor %}
+</ul>
+{% endblock %}
