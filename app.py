@@ -144,9 +144,4 @@ def logout():
 # EXECUÇÃO
 # ----------------------------------------
 if __name__ == '__main__':
-<<<<<<< HEAD
-    criar_tabelas()
     app.run(debug=True)
-=======
-    app.run(debug=True)
->>>>>>> a7cee3e (cadastro e login de clientes)
