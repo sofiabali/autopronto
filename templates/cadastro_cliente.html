@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Cadastro de Cliente{% endblock %}
+{% block content %}
+<div class="form-container">
+  <h2>Cadastro de Cliente</h2>
+  <form method="POST">
+    <input type="text" name="nome" placeholder="Nome completo" required>
+    <input type="email" name="email" placeholder="E-mail" required>
+    <input type="text" name="telefone" placeholder="Telefone">
+    <input type="text" name="cpf" placeholder="CPF">
+    <input type="password" name="senha" placeholder="Senha" required>
+    <button type="submit">Cadastrar</button>
+  </form>
+  <p>Já tem conta? <a href="{{ url_for('login') }}">Entrar</a></p>
+</div>
+{% endblock %}

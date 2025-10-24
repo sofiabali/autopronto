@@ -10,10 +10,17 @@
     <header>
         <h1>Locadora de Veículos</h1>
         <nav>
-            <a href="{{ url_for('index') }}">Início</a>
-            <a href="{{ url_for('carros') }}">Carros</a>
-            <a href="{{ url_for('cadastrar') }}">Cadastrar</a>
-        </nav>
+  <a href="{{ url_for('index') }}">Início</a>
+  <a href="{{ url_for('carros') }}">Carros</a>
+  {% if 'usuario' in session %}
+    <span>Bem-vindo, {{ session['usuario'] }}!</span>
+    <a href="{{ url_for('logout') }}">Sair</a>
+  {% else %}
+    <a href="{{ url_for('login') }}">Login</a>
+    <a href="{{ url_for('cadastro_cliente') }}">Cadastrar</a>
+  {% endif %}
+</nav>
+
     </header>
 
     <main>
